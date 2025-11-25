@@ -1,0 +1,412 @@
+/* ============================================================
+   SISTEMA DE VARIABLES (COLORES Y TIPOGRAFÍA)
+============================================================ */
+:root {
+    --bg: #f6f6f6;
+    --bg-card: #ffffff;
+    --bg-alt: #f1f1f1;
+
+    --text: #222;
+    --text-light: #555;
+
+    --primary: #d62525;
+    --primary-dark: #b81f1f;
+
+    --border: #ccc;
+    --border-subtle: #ddd;
+
+    --kpi-operativos: #2ecc71;
+    --kpi-down: #e74c3c;
+    --kpi-hallazgos: #f39c12;
+    --kpi-disp: #3498db;
+
+    --radius: 10px;
+    --shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    --transition: 0.25s ease-in-out;
+}
+
+/* DARK MODE */
+html.dark {
+    --bg: #1e1e1e;
+    --bg-card: #2a2a2a;
+    --bg-alt: #333;
+
+    --text: #f2f2f2;
+    --text-light: #bbb;
+
+    --border: #444;
+    --border-subtle: #555;
+
+    --shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+/* ============================================================
+   RESETEO BÁSICO
+============================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+============================================================ */
+.app {
+    max-width: 1280px;
+    margin: auto;
+    padding: 12px;
+}
+
+/* ============================================================
+   TOP BAR
+============================================================ */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 65px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.app-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.pill {
+    background: var(--primary);
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: var(--radius);
+    margin-left: 4px;
+    font-weight: bold;
+}
+
+.topbar-right {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-button,
+.chip-button {
+    background: var(--bg-alt);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    color: var(--text);
+}
+
+.icon-button:hover,
+.chip-button:hover {
+    background: var(--border);
+}
+
+/* ============================================================
+   KPI CARDS
+============================================================ */
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.kpi-card {
+    background: var(--bg-card);
+    padding: 14px;
+    text-align: center;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.kpi-label {
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+.kpi-value {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+#cardOperativos { color: var(--kpi-operativos); }
+#cardDown       { color: var(--kpi-down); }
+#cardHallazgos  { color: var(--kpi-hallazgos); }
+#cardDisp       { color: var(--kpi-disp); }
+
+/* ============================================================
+   TABS
+============================================================ */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    font-weight: bold;
+}
+
+.tab-button.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* ============================================================
+   CARDS
+============================================================ */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 12px;
+}
+
+.card-header h2 {
+    margin-bottom: 12px;
+}
+
+.card-subheader {
+    margin-top: 18px;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+/* ============================================================
+   TABLES
+============================================================ */
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+}
+
+.table th {
+    background: var(--bg-alt);
+    padding: 8px;
+    border: 1px solid var(--border);
+}
+
+.table td {
+    padding: 8px;
+    border: 1px solid var(--border-subtle);
+}
+
+.table button {
+    background: var(--primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+}
+
+.table button:hover {
+    background: var(--primary-dark);
+}
+
+/* ============================================================
+   GRID SYSTEM
+============================================================ */
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.inner-grid {
+    gap: 8px;
+}
+
+.align-end {
+    align-items: end;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* ============================================================
+   BOTONES
+============================================================ */
+.primary-button {
+    background: var(--primary);
+    color: white;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+}
+
+.secondary-button {
+    background: var(--bg-alt);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: var(--radius);
+}
+
+.secondary-button:hover {
+    background: var(--border);
+}
+
+.outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* ============================================================
+   ACCIONES
+============================================================ */
+.actions-row {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+/* ============================================================
+   PREVIEW DEL REPORTE
+============================================================ */
+#previewWrapper {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-subtle);
+    padding: 12px;
+    margin-top: 16px;
+}
+
+#previewReport {
+    min-height: 420px;
+    padding: 12px;
+    background: #fff;
+}
+
+/* ============================================================
+   MODAL HISTORIAL
+============================================================ */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+.modal-dialog {
+    position: relative;
+    z-index: 2;
+    max-width: 500px;
+    margin: 100px auto;
+    background: var(--bg-card);
+    padding: 16px;
+    border-radius: var(--radius);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-list {
+    margin-top: 14px;
+    list-style: none;
+}
+
+.history-list li {
+    padding: 6px;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+    .grid-4, .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+}

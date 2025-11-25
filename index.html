@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>RCT – Mina El Descanso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- SheetJS – exportar Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- html2canvas – exportar JPG/PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ============================================================
+         BARRA SUPERIOR – LOGO, nombre, idioma, tema, historial
+    ============================================================= -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <img src="assets/img/logo-drummond.png" alt="Logo" class="logo" />
+        <span class="pill" id="appShort">RCT</span>
+        <span class="app-title">Mina El Descanso</span>
+      </div>
+
+      <div class="topbar-right">
+        <button id="themeToggle" class="icon-button">🌗</button>
+        <button id="langToggle" class="chip-button">
+          <span id="langLabel">ES</span>
+        </button>
+        <button id="historyBtn" class="chip-button">Historial</button>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         TARJETAS KPI – Operativos / Down / Hallazgos / Disponibilidad
+    ============================================================= -->
+    <section class="kpi-row">
+      <article class="kpi-card">
+        <div class="kpi-label">Operativos</div>
+        <div class="kpi-value" id="cardOperativos">0</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Down</div>
+        <div class="kpi-value" id="cardDown">0</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Hallazgos</div>
+        <div class="kpi-value" id="cardHallazgos">0</div>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-label">Disponibilidad %</div>
+        <div class="kpi-value" id="cardDisp">0</div>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         NAVEGACIÓN DE PESTAÑAS
+    ============================================================= -->
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="tab-header" id="tabHeader">Encabezado</button>
+      <button class="tab-button" data-tab="tab-equipos" id="tabEquipos">Equipos</button>
+      <button class="tab-button" data-tab="tab-observaciones" id="tabObs">Observaciones</button>
+      <button class="tab-button" data-tab="tab-resumen" id="tabResumen">Resumen</button>
+    </nav>
+
+    <!-- ============================================================
+         FORMULARIO COMPLETO
+    ============================================================= -->
+    <main class="tab-container">
+      <form id="rctForm" autocomplete="off">
+
+        <!-- ============================================================
+             PESTAÑA: ENCABEZADO
+        ============================================================= -->
+        <section class="tab-panel active" id="tab-header">
+          <div class="card">
+            <div class="card-header"><h2>Encabezado</h2></div>
+
+            <div class="card-body grid-4">
+
+              <div>
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" />
+              </div>
+
+              <div>
+                <label for="grupo">Grupo</label>
+                <select id="grupo">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="turno">Turno</label>
+                <select id="turno">
+                  <option value="day">Día</option>
+                  <option value="night">Noche</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="supervisores">Supervisores</label>
+                <input id="supervisores" placeholder="Nombres – área" />
+              </div>
+
+            </div>
+
+            <div class="card-body grid-2">
+
+              <div>
+                <label for="responsable">Responsable RCT</label>
+                <input id="responsable" placeholder="Nombre" />
+              </div>
+
+              <div class="grid-2 inner-grid">
+
+                <div>
+                  <label for="camiones_x_operador">Camiones x operador (1ra hr)</label>
+                  <input type="number" id="camiones_x_operador" value="0" min="0" />
+                </div>
+
+                <div>
+                  <label for="equipos_taller">Equipos en taller</label>
+                  <input type="number" id="equipos_taller" value="0" min="0" />
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PESTAÑA: EQUIPOS
+        ============================================================= -->
+        <section class="tab-panel" id="tab-equipos">
+          <div class="card">
+            <div class="card-header"><h2>Equipos</h2></div>
+
+            <!-- BUSES -->
+            <div class="card-subheader">Hora llegada buses a bahías</div>
+            <div class="card-body">
+              <div class="grid-3 align-end">
+
+                <div>
+                  <label for="busBahia">Bahía</label>
+                  <input id="busBahia" placeholder="R5, R14" />
+                </div>
+
+                <div>
+                  <label for="busHora">Hora</label>
+                  <input type="time" id="busHora" />
+                </div>
+
+                <div class="text-right">
+                  <button type="button" class="primary-button" id="btnAddBus">+ Agregar</button>
+                </div>
+
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table" id="tablaBuses">
+                  <thead>
+                    <tr><th>Bahía</th><th>Hora</th><th></th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <!-- EQUIPOS VARADOS -->
+            <div class="card-subheader">Equipos varados en campo</div>
+            <div class="card-body">
+
+              <div class="grid-4 align-end">
+
+                <div>
+                  <label for="equipoCamion">Camión / Equipo</label>
+                  <input id="equipoCamion" placeholder="2381" />
+                </div>
+
+                <div>
+                  <label for="equipoUbicacion">Ubicación</label>
+                  <input id="equipoUbicacion" placeholder="Bahía R5" />
+                </div>
+
+                <div>
+                  <label for="equipoRazon">Razón</label>
+                  <input id="equipoRazon" placeholder="Fuga de aceite" />
+                </div>
+
+                <div class="text-right">
+                  <button type="button" class="primary-button" id="btnAddEquipo">+ Agregar</button>
+                </div>
+
+              </div>
+
+              <div class="table-wrapper">
+                <table class="table" id="tablaEquipos">
+                  <thead>
+                    <tr><th>Equipo</th><th>Ubicación</th><th>Razón</th><th></th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <!-- INDICADORES -->
+            <div class="card-subheader">Indicadores</div>
+            <div class="card-body grid-4">
+
+              <div>
+                <label for="operativos_camiones">Camiones operativos</label>
+                <input type="number" id="operativos_camiones" value="0" min="0" />
+              </div>
+
+              <div>
+                <label for="down_camiones">Camiones DOWN</label>
+                <input type="number" id="down_camiones" value="0" min="0" />
+              </div>
+
+              <div>
+                <label for="equipos_livianos">Equipos livianos</label>
+                <input type="number" id="equipos_livianos" value="0" min="0" />
+              </div>
+
+              <div>
+                <label for="equipos_livianos_down">Eq. livianos DOWN</label>
+                <input type="number" id="equipos_livianos_down" value="0" min="0" />
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PESTAÑA: OBSERVACIONES
+        ============================================================= -->
+        <section class="tab-panel" id="tab-observaciones">
+          <div class="card">
+            <div class="card-header"><h2>Observaciones</h2></div>
+            <div class="card-body">
+              <textarea id="observaciones" rows="6"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PESTAÑA: RESUMEN
+        ============================================================= -->
+        <section class="tab-panel" id="tab-resumen">
+
+          <div class="card">
+            <div class="card-header"><h2>Resumen / Firma</h2></div>
+
+            <div class="card-body">
+
+              <label class="checkbox">
+                <input type="checkbox" id="chkCertifico" />
+                <span>Certifico que la información es correcta.</span>
+              </label>
+
+              <div class="actions-row">
+                <button type="button" id="btnSave" class="secondary-button">💾 Guardar</button>
+                <button type="button" id="btnNew" class="secondary-button">🧹 Nuevo día</button>
+              </div>
+
+              <div class="actions-row">
+                <button type="button" id="btnPrint" class="primary-button outline">🖨 Imprimir</button>
+                <button type="button" id="btnPDF" class="primary-button outline">📄 PDF</button>
+                <button type="button" id="btnJPG" class="primary-button outline">🖼 JPG</button>
+                <button type="button" id="btnExcel" class="primary-button outline">📊 Excel</button>
+                <button type="button" id="btnCSV" class="primary-button outline">📄 CSV</button>
+                <button type="button" id="btnJSON" class="primary-button outline">{ } JSON</button>
+              </div>
+
+              <div class="card-body">
+                <div id="previewWrapper">
+                  <div id="previewReport"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </form>
+    </main>
+
+    <!-- ============================================================
+         MODAL HISTORIAL
+    ============================================================= -->
+    <div class="modal" id="historyModal">
+      <div class="modal-backdrop" id="historyBackdrop"></div>
+
+      <div class="modal-dialog">
+        <header class="modal-header">
+          <h2>Historial de reportes</h2>
+          <button id="historyClose" class="icon-button">✕</button>
+        </header>
+        <div class="modal-body">
+          <p>Últimas 15 versiones guardadas en este navegador.</p>
+          <ul id="historyList" class="history-list"></ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
