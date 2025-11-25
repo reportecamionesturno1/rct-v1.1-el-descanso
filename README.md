@@ -81,3 +81,76 @@ Repositorio oficial:
 
 ## 🧱 Estructura del proyecto
 
+rct-v1.1-el-descanso/
+│
+├── index.html
+├── script.js
+├── style.css
+├── config.js
+└── assets/
+├── img/
+│ ├── logo-drummond.png
+│ └── yo-estoy-con.png
+└── lang/
+├── es.json
+└── en.json
+
+
+---
+
+## 🛠 Tecnologías utilizadas
+
+- **HTML5 / CSS3 / JavaScript**
+- **SheetJS (XLSX)** para exportar a Excel
+- **html2canvas** para JPG
+- **jsPDF** para documentos PDF
+- **Bootstrap (CDN)** para soporte visual
+- **LocalStorage API** para historial
+- **ES Modules** internos organizados
+
+---
+
+## ▶️ Ejecución en local
+
+1. Clonar el repositorio:
+
+   ```bash
+   git clone https://github.com/reportecamionesturno1/rct-v1.1-el-descanso.git
+   cd rct-v1.1-el-descanso
+
+Abrir index.html en el navegador.
+
+Comenzar a usar, guardar y exportar reportes.
+
+👥 Colaboradores
+
+Este proyecto es creado y mantenido por:
+
+Alex Ramírez
+
+Diego Fuentes
+
+Ambos trabajando de manera colaborativa, constante y orientada a resultados para construir una herramienta sólida y profesional para la operación minera.
+
+Este mismo estilo de colaboración se aplicará para todas las futuras versiones y repositorios asociados al sistema RCT.
+
+🧭 Roadmap hacia la versión 1.2 / 2.0
+
+Cálculo automático de más indicadores.
+
+Modulo de firmas digitales.
+
+Integración con Apps Script (backend) para enviar datos.
+
+Descarga de evidencias e integración de fotos.
+
+Historial en la nube.
+
+Sincronización entre turnos.
+
+⚠️ Nota
+
+Este sistema es un apoyo digital en desarrollo. No sustituye los formatos oficiales de la empresa, pero busca facilitar el proceso de reporte, análisis y soporte operativo del turno.
+
+
+---
